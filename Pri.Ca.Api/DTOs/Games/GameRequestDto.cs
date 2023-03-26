@@ -11,6 +11,6 @@ namespace Pri.Ca.Api.DTOs.Games
         public string Name { get; set; }
         [Required(ErrorMessage = "Please provide categories")]
         public IEnumerable<int> Categories { get; set;}
-        public IEnumerable<IFormFile> Image { get; set; }
+        public IFormFile Image { get; set; }
     }
 }
