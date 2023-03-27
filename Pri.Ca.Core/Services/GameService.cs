@@ -101,6 +101,22 @@ namespace Pri.Ca.Core.Services
                     }
                 };
             }
+            //check for image
+            if(game.Image != null)
+            {
+                //delete the image
+                var result = _imageService.DeleteImage<Game>(game.Image);
+                if(!result.IsSuccess)
+                {
+                    return new ItemResultModel<Game>
+                    {
+                        ValidationErrors = new List<ValidationResult> 
+                        {
+                           new ValidationResult("Something went wrong...")
+                        }
+                    };
+                }
+            }
             //safely delete
             if(!await _gameRepository.DeleteAsync(game.Id))
             {
@@ -108,7 +124,8 @@ namespace Pri.Ca.Core.Services
                 return new ItemResultModel<Game>
                 {
                         ValidationErrors = new List<ValidationResult>
-                {new ValidationResult("Something went wrong...")}
+                {
+                            new ValidationResult("Something went wrong...")}
                 };
             }
             //delete success
@@ -151,6 +168,11 @@ namespace Pri.Ca.Core.Services
                     new ValidationResult("Game not found!")
                 };
                 return gamesItemResultModel;
+            }
+            if(game.Image != null)
+            {
+                var result = _imageService.GetImagePath<Game>(game.Image);
+                game.Image = result.Image;
             }
             gamesItemResultModel.IsSuccess = true;
             gamesItemResultModel.Items = new List<Game> { game };

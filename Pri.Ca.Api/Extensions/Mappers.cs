@@ -19,7 +19,9 @@ namespace Pri.Ca.Api.Extensions
                 {
                     Id = c.Id,
                     Name = c.Name,
-                })
+                }),
+                Image = game.Image,
+
             };
         }
         //map from IEnumerable<Game> => GamesresponseDto
